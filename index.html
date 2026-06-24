@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>EcoRR+ Scheduler</title>
+
+<script src="https://cdn.tailwindcss.com"></script>
+
+<script>
+tailwind.config = {
+theme: {
+extend: {
+colors: {
+primary: "#06b6d4"
+}
+}
+}
+}
+</script>
+
+</head>
+
+<body class="bg-slate-950 text-white min-h-screen">
+
+<div class="max-w-7xl mx-auto p-6">
+
+   
+
+    <div class="bg-slate-900 border border-slate-800 rounded-3xl p-8 mb-6">
+
+        <h1 class="text-5xl font-bold text-cyan-400">
+            EcoRR+
+        </h1>
+
+        <p class="text-slate-400 mt-2">
+            Adaptive QoS-Aware Round Robin Scheduler
+        </p>
+
+    </div>
+
+
+    <div class="grid lg:grid-cols-3 gap-6 mb-6">
+
+
+        <div class="bg-slate-900 rounded-2xl p-6">
+
+            <h2 class="text-xl font-semibold mb-4">
+                System Mode
+            </h2>
+
+            <div class="space-y-3">
+
+                <label class="block">
+                    <input
+                    type="radio"
+                    name="mode"
+                    value="performance">
+
+                    Performance
+                </label>
+
+                <label class="block">
+                    <input
+                    type="radio"
+                    name="mode"
+                    value="balanced"
+                    checked>
+
+                    Balanced
+                </label>
+
+                <label class="block">
+                    <input
+                    type="radio"
+                    name="mode"
+                    value="powersaving">
+
+                    Power Saving
+                </label>
+
+            </div>
+
+        </div>
+
+
+        <div class="bg-slate-900 rounded-2xl p-6">
+
+            <h2 class="text-xl font-semibold mb-4">
+                Adaptive Quantum
+            </h2>
+
+            <div
+            id="previewQuantum"
+            class="text-5xl font-bold text-cyan-400">
+
+                --
+
+            </div>
+
+        </div>
+
+
+        <div class="bg-slate-900 rounded-2xl p-6">
+
+            <h2 class="text-xl font-semibold mb-4">
+                QoS Strategy
+            </h2>
+
+            <p class="text-slate-400">
+
+                One-Time Critical Process Boost
+
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <div class="bg-slate-900 rounded-2xl p-6 mb-6">
+
+        <div class="flex justify-between items-center mb-5">
+
+            <h2 class="text-2xl font-semibold">
+
+                Process Manager
+
+            </h2>
+
+            <button
+            id="addProcess"
+            class="bg-cyan-500 hover:bg-cyan-400 text-black px-4 py-2 rounded-xl font-semibold">
+
+                + Add Process
+
+            </button>
+
+        </div>
+
+        <div class="overflow-x-auto">
+
+            <table class="w-full">
+
+                <thead>
+
+                    <tr class="border-b border-slate-700">
+
+                        <th class="p-3">PID</th>
+                        <th class="p-3">Arrival</th>
+                        <th class="p-3">Burst</th>
+                        <th class="p-3">Critical</th>
+                        <th class="p-3">Profile</th>
+                        <th class="p-3">Action</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody id="processBody">
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+        <button
+        id="runScheduler"
+        class="mt-6 bg-emerald-500 hover:bg-emerald-400 text-black font-bold px-6 py-3 rounded-xl">
+
+            Run Scheduler
+
+        </button>
+
+    </div>
+
+
+    <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
+
+        <div class="bg-slate-900 p-5 rounded-2xl">
+            <p class="text-slate-400">Mode</p>
+            <h2 id="modeCard" class="text-2xl font-bold mt-2">
+                --
+            </h2>
+        </div>
+
+        <div class="bg-slate-900 p-5 rounded-2xl">
+            <p class="text-slate-400">Quantum</p>
+            <h2 id="quantumCard"
+            class="text-2xl font-bold mt-2 text-cyan-400">
+                --
+            </h2>
+        </div>
+
+        <div class="bg-slate-900 p-5 rounded-2xl">
+            <p class="text-slate-400">Context Switches</p>
+            <h2 id="contextCard"
+            class="text-2xl font-bold mt-2">
+                --
+            </h2>
+        </div>
+
+        <div class="bg-slate-900 p-5 rounded-2xl">
+            <p class="text-slate-400">Energy Score</p>
+            <h2 id="energyCard"
+            class="text-2xl font-bold mt-2">
+                --
+            </h2>
+        </div>
+
+    </div>
+
+
+    <div
+    id="quantumExplanation"
+    class="bg-slate-900 rounded-2xl p-6 mb-6">
+
+        Waiting for simulation...
+
+    </div>
+
+
+    <div class="bg-slate-900 rounded-2xl p-6 mb-6">
+
+        <h2 class="text-2xl font-semibold mb-4">
+            Gantt Chart
+        </h2>
+
+        <div
+        id="ganttChart"
+        class="flex flex-wrap gap-2">
+
+            Run scheduler to generate chart.
+
+        </div>
+
+    </div>
+
+
+    <div class="bg-slate-900 rounded-2xl p-6 mb-6">
+
+        <h2 class="text-2xl font-semibold mb-4">
+            QoS Event Log
+        </h2>
+
+        <div id="qosLog">
+
+        </div>
+
+    </div>
+
+
+    <div class="bg-slate-900 rounded-2xl p-6 mb-6">
+
+        <h2 class="text-2xl font-semibold mb-4">
+
+            Process Metrics
+
+        </h2>
+
+        <table class="w-full">
+
+            <thead>
+
+                <tr class="border-b border-slate-700">
+
+                    <th class="p-3">PID</th>
+                    <th class="p-3">Waiting</th>
+                    <th class="p-3">Turnaround</th>
+                    <th class="p-3">Response</th>
+
+                </tr>
+
+            </thead>
+
+            <tbody id="metricsBody">
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+
+    <div class="bg-slate-900 rounded-2xl p-6 mb-6">
+
+        <h2 class="text-2xl font-semibold mb-4">
+
+            Traditional RR vs EcoRR+
+
+        </h2>
+
+        <table class="w-full">
+
+            <thead>
+
+                <tr class="border-b border-slate-700">
+
+                    <th class="p-3">Metric</th>
+                    <th class="p-3">Traditional RR</th>
+                    <th class="p-3">EcoRR+</th>
+
+                </tr>
+
+            </thead>
+
+            <tbody id="comparisonBody">
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+
+    <div class="bg-slate-900 rounded-2xl p-6">
+
+        <h2 class="text-2xl font-semibold mb-4">
+
+            Resource Analysis
+
+        </h2>
+
+        <div id="resourceAnalysis">
+
+        </div>
+
+    </div>
+
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>
