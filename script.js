@@ -8,11 +8,11 @@ document.getElementById("addProcess");
 const previewQuantum =
 document.getElementById("previewQuantum");
 
-// PID Counter
+
 
 let processCounter = 1;
 
-// Add Process Row
+
 
 function addProcessRow(data = {})
 {
@@ -378,9 +378,6 @@ addProcessRow({
 
 updateQuantumPreview();
 
-// ======================================
-// ENERGY WEIGHTS
-// ======================================
 
 const ENERGY_MAP = {
 
@@ -390,9 +387,7 @@ const ENERGY_MAP = {
 
     Heavy: 8
 };
-// ======================================
-// ADAPTIVE QUANTUM
-// ======================================
+
 
 function calculateAdaptiveQuantum(
 processes
@@ -438,9 +433,7 @@ processes
         factor
     };
 }
-// ======================================
-// METRICS
-// ======================================
+
 
 function generateMetrics(
 processes
@@ -461,9 +454,7 @@ processes
         p.burst;
     });
 }
-// ======================================
-// AVERAGES
-// ======================================
+
 
 function calculateAverages(
 processes
@@ -505,9 +496,7 @@ processes
         avgRT.toFixed(2)
     };
 }
-// ======================================
-// ENERGY SCORE
-// ======================================
+
 
 function calculateEnergyScore(
 processes
@@ -525,9 +514,7 @@ processes
 
     return total;
 }
-// ======================================
-// ECO RR+
-// ======================================
+
 
 function runEcoRR(
 processes
@@ -578,7 +565,7 @@ processes
         processes.length
     )
     {
-        // ADD ARRIVALS
+      
 
         processes.forEach(p =>
         {
@@ -683,7 +670,7 @@ processes
             time
         });
 
-        // ARRIVALS DURING RUN
+        
 
         processes.forEach(p =>
         {
@@ -776,9 +763,7 @@ processes
         processes
     };
 }
-// ======================================
-// TRADITIONAL RR
-// ======================================
+
 
 function runTraditionalRR(
 processes
@@ -886,9 +871,7 @@ processes
 
     return processes;
 }
-// ======================================
-// GANTT CHART
-// ======================================
+
 
 function renderGanttChart(
 gantt
@@ -936,9 +919,7 @@ gantt
         );
     });
 }
-// ======================================
-// QOS LOG
-// ======================================
+
 
 function renderQoSLog(
 events
@@ -986,9 +967,7 @@ events
         log.appendChild(item);
     });
 }
-// ======================================
-// METRICS TABLE
-// ======================================
+
 
 function renderMetrics(
 processes
@@ -1028,9 +1007,7 @@ processes
         `;
     });
 }
-// ======================================
-// QUANTUM PANEL
-// ======================================
+
 
 function renderQuantumExplanation(
 avgBurst,
@@ -1073,9 +1050,7 @@ quantum
     </p>
     `;
 }
-// ======================================
-// RESOURCE ANALYSIS
-// ======================================
+
 
 function renderResourceAnalysis(
 processes
@@ -1151,9 +1126,7 @@ processes
     </div>
     `;
 }
-// ======================================
-// COMPARISON
-// ======================================
+
 
 function renderComparison(
 rrAvg,
@@ -1235,9 +1208,7 @@ ecoAvg
     </tr>
     `;
 }
-// ======================================
-// SUMMARY CARDS
-// ======================================
+
 
 function updateSummaryCards(
 mode,
@@ -1284,9 +1255,7 @@ processes
     )
     );
 }
-// ======================================
-// RUN BUTTON
-// ======================================
+
 
 document
 .getElementById(
